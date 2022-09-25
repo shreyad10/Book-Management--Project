@@ -33,7 +33,7 @@ const createBook = async (req, res) => {
         message: "title is required ",
       });
 
-    if (!isValidBookTitle(title.trim()))
+    if (!isValidBookTitle(title))
       return res.status(400).send({
         status: false,
         message: "title should be a valid format",
@@ -53,7 +53,7 @@ const createBook = async (req, res) => {
         message: "excerpt is required",
       });
 
-    if (!isValidBookTitle(excerpt.trim()))
+    if (!isValidBookTitle(excerpt))
       return res.status(400).send({
         status: false,
         message: "excerpt should be a valid format",
@@ -92,7 +92,7 @@ const createBook = async (req, res) => {
         .status(400)
         .send({ status: false, message: "Please enter ISBN" });
 
-    if (typeof ISBN != "string" || !isValidISBN(ISBN.trim()))
+    if (typeof ISBN != "string" || !isValidISBN(ISBN))
       return res
         .status(400)
         .send({ status: false, message: "Please enter valid ISBN " });
@@ -112,7 +112,7 @@ const createBook = async (req, res) => {
         .status(400)
         .send({ status: false, message: "Please enter category" });
 
-    if (!isValidName(category.trim()))
+    if (!isValidName(category))
       return res
         .status(400)
         .send({ status: false, message: "Please enter valid Category" });
@@ -123,7 +123,7 @@ const createBook = async (req, res) => {
         .status(400)
         .send({ status: false, message: "Please enter subcategory" });
 
-    if (!isValidName(subcategory.trim()))
+    if (!isValidName(subcategory))
       return res
         .status(400)
         .send({ status: false, message: "Please enter valid subcategory" });
@@ -134,7 +134,7 @@ const createBook = async (req, res) => {
         .status(400)
         .send({ status: false, message: "Please enter release date" });
 
-    if (!isValidReleasedAt(releasedAt.trim()))
+    if (!isValidReleasedAt(releasedAt))
       return res.status(400).send({
         status: false,
         message: "Please enter valid release date in YYYY-MM-DD format",
@@ -297,7 +297,7 @@ const updateBook = async function (req, res) {
 
     // validating title
     if (title) {
-      if (!isValidBookTitle(title.trim()))
+      if (!isValidBookTitle(title))
         return res
           .status(400)
           .send({ status: false, message: "title should be a valid format" });
@@ -311,7 +311,7 @@ const updateBook = async function (req, res) {
 
     //  validating title
     if (ISBN) {
-      if (!isValidISBN(ISBN.trim()))
+      if (!isValidISBN(ISBN))
         return res
           .status(400)
           .send({ status: false, message: "ISBN should be a valid format" });
@@ -334,7 +334,7 @@ const updateBook = async function (req, res) {
 
     //  validating excerpt
     if (excerpt) {
-      if (!isValidName(excerpt.trim()))
+      if (!isValidName(excerpt))
         return res
           .status(400)
           .send({ status: false, message: "excerpt should be a valid format" });

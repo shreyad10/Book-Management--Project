@@ -44,7 +44,7 @@ const registerUser = async function (req, res) {
         .status(400)
         .send({ status: false, message: "name is required " });
     }
-    if (!isValidName(name.trim())) {
+    if (!isValidName(name)) {
       return res
         .status(400)
         .send({ status: false, message: "name should be a valid format" });
@@ -74,7 +74,7 @@ const registerUser = async function (req, res) {
         .status(400)
         .send({ status: false, message: "email is required " });
     }
-   if (!isValidEmail(email.trim())) {
+   if (!isValidEmail(email)) {
       return res
         .status(400)
         .send({ status: false, message: "Enter valid emailId" });
@@ -92,7 +92,7 @@ const registerUser = async function (req, res) {
         .status(400)
         .send({ status: false, message: "password is required" });
     }
-    if (!isValidPassword(password.trim()))
+    if (!isValidPassword(password))
       return res.status(400).send({
         status: false,
         msg: "Password must contain (8-15) characters, atleast One UpperCase , One LowerCase , One Numeric Value and One Special Character.",
@@ -201,7 +201,9 @@ const userLogin = async (req, res) => {
     res.setHeader("x-api-key", token);
     return res
       .status(200)
-      .send({ status: true, message: "Successfully Login", data: { token : token }});
+      .send({ status: true, message: "Successfully Login", data: { token : token ,  userId: checkValidUser._id,
+        iat: new Date(),
+        expiresIn: "1h"}});
   } 
   catch (error) {
     res.status(500).send({ status: false, message: error.message });
