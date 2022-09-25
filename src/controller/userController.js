@@ -35,7 +35,10 @@ const registerUser = async function (req, res) {
     if (!isValid(title) || !isValidTitle(title)) {
       return res
         .status(400)
-        .send({ status: false, message: "title should be a valid format-Mr, Mrs, Miss" });
+        .send({
+          status: false,
+          message: "title should be a valid format-Mr, Mrs, Miss",
+        });
     }
 
     // validating name
@@ -74,19 +77,19 @@ const registerUser = async function (req, res) {
         .status(400)
         .send({ status: false, message: "email is required " });
     }
-   if (!isValidEmail(email)) {
+    if (!isValidEmail(email)) {
       return res
         .status(400)
         .send({ status: false, message: "Enter valid emailId" });
     }
-   // check if phone no already email
+    // check if phone no already email
     let validEmail = await userModel.findOne({ email: email });
     if (validEmail)
       return res
         .status(400)
         .send({ status: false, message: "This email is already registered" });
 
-      // validating password
+    // validating password
     if (!password) {
       return res
         .status(400)
@@ -98,7 +101,7 @@ const registerUser = async function (req, res) {
         msg: "Password must contain (8-15) characters, atleast One UpperCase , One LowerCase , One Numeric Value and One Special Character.",
       });
 
-      // validating address
+    // validating address
     if (address) {
       let valid = Object.keys(address);
       if (typeof address !== "object" || valid.length == 0)
@@ -177,7 +180,7 @@ const userLogin = async (req, res) => {
         .send({ status: false, message: "email id and password is required " });
     }
 
-    // check whether user is registered or not 
+    // check whether user is registered or not
     const checkValidUser = await userModel.findOne({
       email: data.email,
       password: data.password,
@@ -190,7 +193,7 @@ const userLogin = async (req, res) => {
       });
     }
 
-    // generating token 
+    // generating token
     let token = jwt.sign(
       { userId: checkValidUser._id },
       "books_Management_Group_41",
@@ -201,11 +204,17 @@ const userLogin = async (req, res) => {
     res.setHeader("x-api-key", token);
     return res
       .status(200)
-      .send({ status: true, message: "Successfully Login", data: { token : token ,  userId: checkValidUser._id,
-        iat: new Date(),
-        expiresIn: "1h"}});
-  } 
-  catch (error) {
+      .send({
+        status: true,
+        message: "Successfully Login",
+        data: {
+          token: token,
+          userId: checkValidUser._id,
+          iat: new Date(),
+          expiresIn: "1h",
+        },
+      });
+  } catch (error) {
     res.status(500).send({ status: false, message: error.message });
   }
 };
