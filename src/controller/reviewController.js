@@ -33,20 +33,27 @@ const createReview = async function (req, res) {
         .status(400)
         .send({ status: false, message: "BookId is mandatory" });
 
-    console.log(bookId);
     if (!isValidId(bookId))
       return res
         .status(400)
         .send({ status: false, message: "Invalid BookId !!" });
 
-    //  check whether book is not deleted
-    let book = await bookModel.findOne({ _id: bookId, isDeleted: true });
-    if (book)
+    //  check whether book is present
+    let book = await bookModel.findOne({ _id: bookId });
+    console.log(book);
+    if (book == null)
       return res.status(400).send({
         status: false,
         message: "No books available with is BookId !!",
       });
+    //  check whether book is  not deleted
+    if (book.isDeleted == true)
+      return res.status(400).send({
+        status: false,
+        message: "No  BookId !!",
+      });
 
+      
     //  validating review
     if (!review)
       return res
@@ -79,7 +86,7 @@ const createReview = async function (req, res) {
 
     let updatedBook = await bookModel
       .findByIdAndUpdate(
-        { _id: bookId },
+        { _id: bookId, isDeleted: false },
         { $inc: { reviews: +1 }, reviewedAt: new Date() },
         { new: true }
       )

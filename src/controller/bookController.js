@@ -347,7 +347,7 @@ const updateBook = async function (req, res) {
         $set: {
           title: title,
           excerpt: excerpt,
-          releasedAt: new Date(),
+          releasedAt: releasedAt,
           ISBN: ISBN,
         },
       },
