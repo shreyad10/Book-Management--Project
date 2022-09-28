@@ -22,7 +22,7 @@ const createBook = async (req, res) => {
         .status(400)
         .send({ status: false, message: "All fields are required" });
 
-    let { title, excerpt, userId, ISBN, category, subcategory, releasedAt } =
+    let { title, excerpt, userId, ISBN, category, subcategory, releasedAt, bookCover } =
       req.body;
 
     // title validation
@@ -70,6 +70,12 @@ const createBook = async (req, res) => {
       return res
         .status(400)
         .send({ status: false, message: "Please enter valid userId" });
+
+        // bookCover validation 
+        if (!bookCover)
+        return res
+          .status(400)
+          .send({ status: false, message: "Please enter bookCover url" });
 
     //checking authorization
 
